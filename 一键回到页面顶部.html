@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>一键回到页面顶部</title>
+    <style>    
+        #app{
+            height:2000px;
+            background:orange;
+        }
+        #topBtn{
+            position:fixed;
+            bottom: 30px;
+            right:30px;
+            width:100px;
+            height: 100px;
+            background:olivedrab;
+            border:none;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <button id="topBtn">Top</button>
+</body>
+</html>
+<script type="text/javascript">
+    var app = document.getElementById("app");
+    var topBtn = document.getElementById("topBtn");
+    var intervalID;
+    var speed = 0;
+    if(window.scrollY <= 60){
+        topBtn.style.display = "none";
+    }
+    window.onscroll = function(){
+        if(window.scrollY <= 60){
+            topBtn.style.display = "none";            
+        }else{
+            topBtn.style.display = "block";            
+        }
+    }
+    topBtn.onclick = function(){
+        intervalID = setInterval(function(){
+            var totalDistance = window.scrollY;
+            if(totalDistance <= 1000){
+                speed = totalDistance / 3;
+            }
+            else{
+                speed = totalDistance / 5;
+            }
+            window.scrollTo(0,totalDistance-speed);
+            if(totalDistance == 0){
+                clearInterval(intervalID);
+            }
+        },30)
+        
+    }
+   
+</script>

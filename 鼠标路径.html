@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>鼠标路径</title>
+    <style type="text/css">
+        .divs{
+            position: absolute;
+            width:20px;
+            height: 20px;
+            border-radius: 10px;
+            background: orange;
+        }
+        #app{
+            height: 2000px;
+            background: olivedrab;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+</html>
+<script type="text/javascript">
+    var divs = [];
+    var body = document.body;
+    for(var i = 0;i < 10;i ++){
+        var div = document.createElement("div");
+        div.className = "divs";
+        body.appendChild(div);
+        divs.push(div);
+    }
+    document.onmousemove = function(ev){
+        var mEvent = ev || event;
+        var mousePosition = getMousePosition(mEvent);
+        for(var i = divs.length - 1;i > 0;i --){
+            divs[i].style.left = divs[i-1].offsetLeft+"px";
+            divs[i].style.top = divs[i-1].offsetTop+"px";
+        }
+        divs[0].style.left = mousePosition.mouseX+"px";
+        divs[0].style.top = mousePosition.mouseY+"px";
+    }
+    function getMousePosition(event){
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
+        return {mouseX: event.clientX+scrollTop, mouseY: event.clientY+scrollLeft};
+    }
+</script>
